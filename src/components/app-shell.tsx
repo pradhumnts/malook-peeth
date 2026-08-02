@@ -9,7 +9,6 @@ import { PageTransition } from "@/components/page-motion";
 import { ServiceWorkerRegister } from "@/components/service-worker-register";
 import { StatusBarTheme } from "@/components/status-bar-theme";
 import { isOnboardingDone } from "@/lib/onboarding";
-import { cn } from "@/lib/utils";
 
 /** Flip to true when the audio/video player is wired up. */
 const SHOW_MINI_PLAYER = false;
@@ -51,12 +50,8 @@ export function AppShell({ children }: { children: React.ReactNode }) {
     <LanguageProvider>
       <ServiceWorkerRegister />
       <StatusBarTheme />
-      <div
-        className={cn(
-          "relative mx-auto flex min-h-dvh w-full max-w-lg flex-col md:max-w-2xl lg:max-w-5xl lg:shadow-[0_0_0_1px_rgba(0,0,0,0.04)]",
-          isOnboarding || isPlayer ? "bg-black" : "bg-background",
-        )}
-      >        <main
+      <div className="relative mx-auto flex min-h-dvh w-full max-w-lg flex-col bg-background md:max-w-2xl lg:max-w-5xl lg:shadow-[0_0_0_1px_rgba(0,0,0,0.04)]">
+        <main
           className={
             hideChrome
               ? "flex-1"

@@ -47,9 +47,9 @@ export default function KathaSeriesPage({
 
   return (
     <div className="min-h-dvh bg-background">
-      {/* Hero */}
-      <section className="relative">
-        <div className="relative aspect-[4/5] max-h-[70vh] w-full overflow-hidden sm:aspect-[16/11] sm:max-h-none">
+      {/* Hero — pull under status bar so the poster isn't cropped by a slab */}
+      <section className="relative -mt-[env(safe-area-inset-top,0px)]">
+        <div className="relative aspect-[4/5] max-h-[calc(70vh+env(safe-area-inset-top,0px))] w-full overflow-hidden sm:aspect-[16/11] sm:max-h-none">
           <Image
             src={katha.image}
             alt={katha.title}
@@ -58,8 +58,8 @@ export default function KathaSeriesPage({
             className="object-cover"
             sizes="100vw"
           />
-          <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/45 via-30% to-black/35" />
-          <div className="pointer-events-none absolute inset-x-0 top-0 h-28 bg-gradient-to-b from-black/50 to-transparent" />
+          <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/40 via-35% to-transparent" />
+          <div className="pointer-events-none absolute inset-x-0 top-0 h-36 bg-gradient-to-b from-black/35 via-black/10 to-transparent" />
 
           {/* Top controls */}
           <div className="absolute inset-x-0 top-0 flex items-center justify-between px-4 pt-[max(0.75rem,env(safe-area-inset-top))]">

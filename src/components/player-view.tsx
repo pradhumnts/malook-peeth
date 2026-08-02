@@ -61,8 +61,8 @@ export function PlayerView({
         className="scale-110 object-cover blur-2xl brightness-75"
         sizes="100vw"
       />
-      <div className="absolute inset-0 bg-black/40" />
-      <div className="pointer-events-none absolute inset-x-0 top-0 h-28 bg-gradient-to-b from-black/55 to-transparent" />
+      <div className="absolute inset-0 bg-black/35" />
+      <div className="pointer-events-none absolute inset-x-0 top-0 h-36 bg-gradient-to-b from-black/30 via-black/10 to-transparent" />
 
       <motion.div
         initial={{ opacity: 0, y: 24 }}
