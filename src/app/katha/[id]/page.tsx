@@ -58,7 +58,8 @@ export default function KathaSeriesPage({
             className="object-cover"
             sizes="100vw"
           />
-          <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/50 via-25% to-transparent to-45%" />
+          <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/45 via-30% to-black/35" />
+          <div className="pointer-events-none absolute inset-x-0 top-0 h-28 bg-gradient-to-b from-black/50 to-transparent" />
 
           {/* Top controls */}
           <div className="absolute inset-x-0 top-0 flex items-center justify-between px-4 pt-[max(0.75rem,env(safe-area-inset-top))]">

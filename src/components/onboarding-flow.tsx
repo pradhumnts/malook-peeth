@@ -31,8 +31,8 @@ export function OnboardingFlow() {
   }
 
   return (
-    <div className="relative min-h-dvh overflow-hidden bg-white">
-      {/* Photo fills the screen — no cropped bottom edge */}
+    <div className="fixed inset-0 z-50 overflow-hidden bg-black">
+      {/* Full-bleed photo — edge to edge under status bar */}
       <div className="absolute inset-0">
         <AnimatePresence mode="wait">
           <motion.div
@@ -54,6 +54,16 @@ export function OnboardingFlow() {
           </motion.div>
         </AnimatePresence>
       </div>
+
+      {/* Top scrim — keeps status-bar icons readable */}
+      <div
+        className="pointer-events-none absolute inset-x-0 top-0 z-[1] h-[28%]"
+        style={{
+          background:
+            "linear-gradient(to bottom, rgba(0,0,0,0.45) 0%, rgba(0,0,0,0.18) 45%, rgba(0,0,0,0) 100%)",
+        }}
+        aria-hidden
+      />
 
       {/*
         Soft white shade: long fade from mid-screen into solid white.

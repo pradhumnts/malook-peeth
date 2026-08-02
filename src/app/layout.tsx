@@ -31,7 +31,7 @@ export const metadata: Metadata = {
     "Official companion for Pujya Shri Rajendra Das Ji Maharaj — Katha, Events, Gau Sewa, Gurukul, Books, Donations & Ashrams.",
   appleWebApp: {
     capable: true,
-    statusBarStyle: "default",
+    statusBarStyle: "black-translucent",
     title: "Malook Peeth",
   },
   formatDetection: {
@@ -53,7 +53,11 @@ export const metadata: Metadata = {
 };
 
 export const viewport: Viewport = {
-  themeColor: "#ffffff",
+  themeColor: [
+    { media: "(prefers-color-scheme: light)", color: "#ffffff" },
+    { media: "(prefers-color-scheme: dark)", color: "#0c0a09" },
+  ],
+  colorScheme: "light",
   width: "device-width",
   initialScale: 1,
   maximumScale: 1,

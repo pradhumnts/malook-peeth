@@ -32,7 +32,7 @@ export function PageHeader({
         "sticky top-0 z-30 flex items-center gap-3 px-4 pb-3 pt-[max(0.75rem,env(safe-area-inset-top))]",
         light
           ? "bg-transparent"
-          : "bg-background/80 backdrop-blur-xl",
+          : "border-b border-transparent bg-background/90 backdrop-blur-xl",
         className,
       )}
     >

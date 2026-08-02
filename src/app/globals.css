@@ -98,12 +98,20 @@
   * {
     @apply border-border outline-ring/50;
   }
-  body {
-    @apply bg-background text-foreground antialiased;
-  }
   html {
     @apply font-sans;
     scroll-behavior: smooth;
+    height: 100%;
+    /* iOS: paint into the notch / status-bar region */
+    min-height: 100%;
+    min-height: -webkit-fill-available;
+    background-color: var(--background);
+  }
+  body {
+    @apply bg-background text-foreground antialiased;
+    min-height: 100%;
+    min-height: 100dvh;
+    min-height: -webkit-fill-available;
   }
 }
 
