@@ -1,65 +1,191 @@
-import Image from "next/image";
+"use client";
 
-export default function Home() {
+import Image from "next/image";
+import Link from "next/link";
+import { useMemo } from "react";
+import { motion } from "framer-motion";
+import { Bell, ChevronRight, Search } from "lucide-react";
+import { AppDrawer } from "@/components/app-drawer";
+import { EventCard } from "@/components/event-card";
+import { ExploreTile } from "@/components/explore-tile";
+import { FeaturedCarousel } from "@/components/featured-carousel";
+import { HScroll } from "@/components/h-scroll";
+import { MediaTile } from "@/components/media-tile";
+import { SectionHeader } from "@/components/section-header";
+import { useLanguage } from "@/components/language-provider";
+import {
+  localizedEvents,
+  localizedExploreLinks,
+  localizedKathas,
+} from "@/lib/localize";
+
+const fade = {
+  hidden: { opacity: 0, y: 16 },
+  show: (i: number) => ({
+    opacity: 1,
+    y: 0,
+    transition: {
+      delay: 0.08 * i,
+      duration: 0.5,
+      ease: [0.22, 1, 0.36, 1] as const,
+    },
+  }),
+};
+
+export default function HomePage() {
+  const { t, language } = useLanguage();
+  const events = useMemo(() => localizedEvents(language), [language]);
+  const kathas = useMemo(() => localizedKathas(language), [language]);
+  const explore = useMemo(() => localizedExploreLinks(language), [language]);
+
   return (
-    <div className="flex flex-col flex-1 items-center justify-center bg-zinc-50 font-sans dark:bg-black">
-      <main className="flex flex-1 w-full max-w-3xl flex-col items-center justify-between py-32 px-16 bg-white dark:bg-black sm:items-start">
-        <Image
-          className="dark:invert"
-          src="/next.svg"
-          alt="Next.js logo"
-          width={100}
-          height={20}
-          priority
+    <div className="pt-[max(0.5rem,env(safe-area-inset-top))]">
+      <motion.header
+        initial={{ opacity: 0, y: -8 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.4 }}
+        className="flex items-center justify-between px-4 py-3"
+      >
+        <AppDrawer />
+        <div className="flex items-center gap-2">
+          <Link
+            href="/donate"
+            className="rounded-full bg-secondary px-3.5 py-1.5 text-xs font-semibold text-ink transition-transform active:scale-95"
+          >
+            {t("contribute")}
+          </Link>
+          <button
+            type="button"
+            className="flex size-9 items-center justify-center rounded-full bg-secondary text-ink"
+            aria-label={t("search")}
+          >
+            <Search className="size-4" strokeWidth={1.75} />
+          </button>
+          <button
+            type="button"
+            className="flex size-9 items-center justify-center rounded-full bg-secondary text-ink"
+            aria-label={t("notifications")}
+          >
+            <Bell className="size-4" strokeWidth={1.75} />
+          </button>
+        </div>
+      </motion.header>
+
+      <div className="mt-1">
+        <FeaturedCarousel />
+      </div>
+
+      <motion.section
+        custom={1}
+        variants={fade}
+        initial="hidden"
+        animate="show"
+        className="mt-8"
+      >
+        <SectionHeader
+          title={t("upcomingEvents")}
+          subtitle={t("upcomingEventsSub")}
+          href="/events"
         />
-        <div className="flex flex-col items-center gap-6 text-center sm:items-start sm:text-left">
-          <h1 className="max-w-xs text-3xl font-semibold leading-10 tracking-tight text-black dark:text-zinc-50">
-            To get started, edit the page.tsx file.
-          </h1>
-          <p className="max-w-md text-lg leading-8 text-zinc-600 dark:text-zinc-400">
-            Looking for a starting point or more instructions? Head over to{" "}
-            <a
-              href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
-            >
-              Templates
-            </a>{" "}
-            or the{" "}
-            <a
-              href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
-            >
-              Learning
-            </a>{" "}
-            center.
-          </p>
-        </div>
-        <div className="flex flex-col gap-4 text-base font-medium sm:flex-row">
-          <a
-            className="flex h-12 w-full items-center justify-center gap-2 rounded-full bg-foreground px-5 text-background transition-colors hover:bg-[#383838] dark:hover:bg-[#ccc] md:w-[158px]"
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <Image
-              className="dark:invert"
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={16}
-              height={16}
+        <HScroll>
+          {events.map((event) => (
+            <EventCard
+              key={event.id}
+              href={`/events/${event.id}`}
+              image={event.image}
+              title={event.title}
+              type={event.type}
+              location={event.location}
+              dates={event.dates}
             />
-            Deploy Now
-          </a>
-          <a
-            className="flex h-12 w-full items-center justify-center rounded-full border border-solid border-black/[.08] px-5 transition-colors hover:border-transparent hover:bg-black/[.04] dark:border-white/[.145] dark:hover:bg-[#1a1a1a] md:w-[158px]"
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Documentation
-          </a>
-        </div>
-      </main>
+          ))}
+        </HScroll>
+      </motion.section>
+
+      <motion.section
+        custom={2}
+        variants={fade}
+        initial="hidden"
+        animate="show"
+        className="mt-8"
+      >
+        <SectionHeader
+          title={t("listenWatch")}
+          subtitle={t("listenWatchSub")}
+          href="/katha"
+        />
+        <HScroll>
+          {kathas.map((k) => (
+            <MediaTile
+              key={k.id}
+              href={`/katha/${k.id}`}
+              image={k.image}
+              title={k.title}
+              subtitle={`${k.type === "video" ? t("video") : t("audio")} · ${k.episodes} ${t("parts")}`}
+            />
+          ))}
+        </HScroll>
+      </motion.section>
+
+      <motion.section
+        custom={3}
+        variants={fade}
+        initial="hidden"
+        animate="show"
+        className="mt-8 px-4"
+      >
+        <SectionHeader
+          title={t("gauSewa")}
+          subtitle={t("gauSewaHomeSub")}
+          href="/gau-seva"
+          className="px-0"
+        />
+        <Link
+          href="/gau-seva"
+          className="group block overflow-hidden rounded-3xl bg-secondary"
+        >
+          <div className="relative aspect-[16/10] overflow-hidden">
+            <Image
+              src="/images/gau-6.webp"
+              alt="Jadkhor Gaudham · Gau Mata"
+              fill
+              className="object-cover transition-transform duration-700 group-hover:scale-105"
+              sizes="(max-width: 768px) 100vw, 800px"
+            />
+          </div>
+          <div className="flex items-end gap-3 px-5 py-4">
+            <div className="min-w-0 flex-1">
+              <p className="text-[11px] font-semibold uppercase tracking-[0.16em] text-gold">
+                Jadkhor Gaudham
+              </p>
+              <h3 className="mt-1 text-xl font-bold tracking-tight text-ink">
+                {t("gauSewaHomeHeadline")}
+              </h3>
+              <p className="mt-1.5 text-sm text-muted-foreground">
+                {t("gauSewaHomeMeta")}
+              </p>
+            </div>
+            <span className="mb-0.5 flex size-9 shrink-0 items-center justify-center rounded-full bg-white text-ink transition-transform group-hover:translate-x-0.5 group-active:scale-95">
+              <ChevronRight className="size-4" strokeWidth={2.25} />
+            </span>
+          </div>
+        </Link>
+      </motion.section>
+
+      <motion.section
+        custom={4}
+        variants={fade}
+        initial="hidden"
+        animate="show"
+        className="mt-8 pb-4"
+      >
+        <SectionHeader title={t("explore")} />
+        <HScroll>
+          {explore.map((link) => (
+            <ExploreTile key={link.href} {...link} />
+          ))}
+        </HScroll>
+      </motion.section>
     </div>
   );
 }
