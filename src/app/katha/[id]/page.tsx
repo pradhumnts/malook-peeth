@@ -46,83 +46,51 @@ export default function KathaSeriesPage({
     needsToggle && !expanded ? `${desc.slice(0, 85).trim()}…` : desc;
 
   return (
-    <div className="min-h-dvh bg-background">
+    <div className="min-h-dvh bg-transparent">
       {/*
-        Apple Podcasts-style hero:
-        full poster color-wash (blurred) under the status bar,
-        sharp artwork below the safe area so nothing is cropped.
+        No -mt: shell already starts at the viewport top under black-translucent.
+        Padding reserves the status-bar band for the wash; sharp poster +
+        controls begin just below so art isn't cropped and buttons stay tappable.
       */}
       <section className="relative overflow-hidden">
-        {/* Full immersive color wash from the poster itself */}
+        {/* Poster color-wash — paints through the status-bar band */}
         <div className="pointer-events-none absolute inset-0 z-0" aria-hidden>
           <Image
             src={katha.image}
             alt=""
             fill
             priority
-            className="scale-[1.45] object-cover object-top blur-[56px] brightness-[0.92] saturate-150"
+            className="scale-[1.5] object-cover object-top blur-[60px] brightness-[0.9] saturate-150"
             sizes="100vw"
           />
-          {/* Soft top vignette for status-bar glyphs — no hard bar */}
           <div
-            className="absolute inset-x-0 top-0 h-36"
+            className="absolute inset-x-0 top-0 h-28"
             style={{
               background:
-                "linear-gradient(to bottom, rgba(0,0,0,0.28) 0%, rgba(0,0,0,0.08) 55%, transparent 100%)",
+                "linear-gradient(to bottom, rgba(0,0,0,0.22) 0%, transparent 100%)",
             }}
           />
-          {/* Dissolve wash into page white behind the lower hero */}
           <div
-            className="absolute inset-x-0 bottom-0 h-40"
+            className="absolute inset-x-0 bottom-0 h-36"
             style={{
               background:
-                "linear-gradient(to bottom, transparent 0%, rgba(255,255,255,0.45) 55%, #ffffff 100%)",
+                "linear-gradient(to bottom, transparent 0%, rgba(255,255,255,0.5) 60%, #ffffff 100%)",
             }}
           />
         </div>
 
-        {/* Foreground: safe-area pad + sharp poster (no -mt cancel) */}
+        {/* Sharp poster starts below the status bar */}
         <div
           className="relative z-10"
-          style={{
-            paddingTop: "calc(env(safe-area-inset-top, 0px) + 0.5rem)",
-          }}
+          style={{ paddingTop: "env(safe-area-inset-top, 0px)" }}
         >
-          {/* Controls — clear of the notch, over the wash */}
-          <div className="flex items-center justify-between px-4 pb-3">
-            <Link
-              href="/katha"
-              className="flex size-10 items-center justify-center rounded-full bg-black/25 text-white backdrop-blur-xl"
-              aria-label={t("back")}
-            >
-              <ChevronLeft className="size-5" />
-            </Link>
-            <div className="flex items-center gap-0.5 rounded-full bg-black/25 px-1.5 py-1 backdrop-blur-xl">
-              <button
-                type="button"
-                className="flex size-8 items-center justify-center text-white"
-                aria-label="Save"
-              >
-                <Plus className="size-4" />
-              </button>
-              <button
-                type="button"
-                className="flex size-8 items-center justify-center text-white"
-                aria-label={t("more")}
-              >
-                <MoreHorizontal className="size-4" />
-              </button>
-            </div>
-          </div>
-
-          {/* Sharp poster — top of art fully visible; soft-blend into wash */}
           <div
-            className="relative aspect-[4/5] max-h-[62vh] w-full overflow-hidden sm:aspect-[16/11] sm:max-h-none"
+            className="relative aspect-[4/5] max-h-[68vh] w-full overflow-hidden sm:aspect-[16/11] sm:max-h-none"
             style={{
               maskImage:
-                "linear-gradient(to bottom, transparent 0%, black 5%, black 100%)",
+                "linear-gradient(to bottom, transparent 0%, black 3%, black 100%)",
               WebkitMaskImage:
-                "linear-gradient(to bottom, transparent 0%, black 5%, black 100%)",
+                "linear-gradient(to bottom, transparent 0%, black 3%, black 100%)",
             }}
           >
             <Image
@@ -134,17 +102,43 @@ export default function KathaSeriesPage({
               sizes="100vw"
             />
 
-            {/* Title readability */}
             <div
-              className="pointer-events-none absolute inset-x-0 bottom-0 h-[48%]"
+              className="pointer-events-none absolute inset-x-0 bottom-0 h-[42%]"
               style={{
                 background:
-                  "linear-gradient(to top, rgba(0,0,0,0.72) 0%, rgba(0,0,0,0.28) 50%, transparent 100%)",
+                  "linear-gradient(to top, rgba(0,0,0,0.75) 0%, rgba(0,0,0,0.3) 45%, transparent 100%)",
               }}
               aria-hidden
             />
 
-            <div className="absolute inset-x-0 bottom-0 z-10 flex flex-col items-center px-6 pb-10 text-center">
+            {/* Controls over the poster, just below the status bar */}
+            <div className="absolute inset-x-0 top-0 z-20 flex items-center justify-between px-4 pt-2.5">
+              <Link
+                href="/katha"
+                className="flex size-10 items-center justify-center rounded-full bg-black/30 text-white backdrop-blur-xl"
+                aria-label={t("back")}
+              >
+                <ChevronLeft className="size-5" />
+              </Link>
+              <div className="flex items-center gap-0.5 rounded-full bg-black/30 px-1.5 py-1 backdrop-blur-xl">
+                <button
+                  type="button"
+                  className="flex size-8 items-center justify-center text-white"
+                  aria-label="Save"
+                >
+                  <Plus className="size-4" />
+                </button>
+                <button
+                  type="button"
+                  className="flex size-8 items-center justify-center text-white"
+                  aria-label={t("more")}
+                >
+                  <MoreHorizontal className="size-4" />
+                </button>
+              </div>
+            </div>
+
+            <div className="absolute inset-x-0 bottom-0 z-10 flex flex-col items-center px-6 pb-8 text-center">
               <motion.div
                 initial={{ opacity: 0, y: 12 }}
                 animate={{ opacity: 1, y: 0 }}
@@ -194,8 +188,7 @@ export default function KathaSeriesPage({
         </div>
       </section>
 
-      {/* Episodes */}
-      <section className="relative z-[1] -mt-4 bg-background px-4 pb-8 pt-4">
+      <section className="relative z-[1] -mt-2 bg-background px-4 pb-8 pt-5">
         <h2 className="text-2xl font-bold tracking-tight text-ink">
           {t("episodes")}
         </h2>

@@ -21,7 +21,10 @@ export function AppShell({ children }: { children: React.ReactNode }) {
 
   const isPlayer = pathname.includes("/play");
   const isOnboarding = pathname === "/onboarding";
+  const isKathaDetail = /^\/katha\/[^/]+\/?$/.test(pathname);
   const hideChrome = isPlayer || isOnboarding;
+  /** Immersive heroes need a transparent shell so the wash reaches the status bar. */
+  const transparentShell = hideChrome || isKathaDetail;
   /** Home already has its own staggered section motion. */
   const usePageMotion = pathname !== "/" && !hideChrome;
 
@@ -52,7 +55,7 @@ export function AppShell({ children }: { children: React.ReactNode }) {
       <StatusBarTheme />
       <div
         className={
-          hideChrome
+          transparentShell
             ? "relative mx-auto flex min-h-dvh w-full max-w-lg flex-col bg-transparent md:max-w-2xl lg:max-w-5xl"
             : "relative mx-auto flex min-h-dvh w-full max-w-lg flex-col bg-background md:max-w-2xl lg:max-w-5xl lg:shadow-[0_0_0_1px_rgba(0,0,0,0.04)]"
         }
