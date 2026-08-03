@@ -1,4 +1,12 @@
+import {
+  formatPublishedAgo,
+  formatYoutubeDuration,
+  kathaYoutubePlaylists,
+  youtubeItemTitle,
+} from "@/lib/youtube-playlists";
+
 export type MediaType = "audio" | "video";
+export type KathaSource = "local" | "youtube";
 
 export type Katha = {
   id: string;
@@ -6,6 +14,12 @@ export type Katha = {
   scripture: string;
   subtitle: string;
   type: MediaType;
+  /** How playback is delivered. Defaults to local (in-app player). */
+  source?: KathaSource;
+  /** Optional default YouTube video when episode ids are not mapped yet. */
+  youtubeVideoId?: string;
+  /** YouTube playlist id when episodes are sourced from a playlist. */
+  youtubePlaylistId?: string;
   duration: string;
   episodes: number;
   image: string;
@@ -21,6 +35,8 @@ export type Episode = {
   type: MediaType;
   image: string;
   publishedAgo: string;
+  /** YouTube video id for embed playback (11-char id). */
+  youtubeVideoId?: string;
 };
 
 export type EventItem = {
@@ -293,16 +309,64 @@ export function getEvent(id: string): EventItem | undefined {
 
 export const kathas: Katha[] = [
   {
+    id: "vinay-patrika",
+    title: "Vinay Patrika",
+    scripture: "Vinay Patrika",
+    subtitle: "Tulsidas · Devotional Hymns",
+    type: "video",
+    source: "youtube",
+    youtubePlaylistId: "PL1nG3c-FqOQfHk1z7EhIfU0jlFlm1DYH-",
+    youtubeVideoId: "gOSksTeZ6vk",
+    duration: "~740h",
+    episodes: 330,
+    image: img.posterVinayPatrika,
+    description:
+      "Heartfelt discourses on Vinay Patrika — prayers of humility that melt the heart toward the Divine. Full series from Maharaj Ji’s official YouTube playlist.",
+  },
+  {
+    id: "bhaktmaal",
+    title: "Bhaktmaal",
+    scripture: "Bhaktmaal",
+    subtitle: "Baleshwar, Odisha · 2025",
+    type: "video",
+    source: "youtube",
+    youtubePlaylistId: "PL1nG3c-FqOQcNJP_kQE0y28tUxqux2mw-",
+    youtubeVideoId: "yYbQZ56glm0",
+    duration: "~25h",
+    episodes: 7,
+    image: img.posterBhaktmaal,
+    description:
+      "Bhaktmaal Katha by Maharaj Ji at Baleshwar, Odisha (2025) — stories of legendary saints and devotees that inspire pure bhakti and surrender.",
+  },
+  {
     id: "bhagwat-vrindavan",
     title: "Shrimad Bhagwat",
     scripture: "Bhagwat",
-    subtitle: "Vrindavan · Complete Series",
+    subtitle: "Rishikesh · 2022",
     type: "video",
-    duration: "42h",
-    episodes: 48,
+    source: "youtube",
+    youtubePlaylistId: "PL1nG3c-FqOQe6wmVdgGf1aDdPvvNzadxP",
+    youtubeVideoId: "AiO0w2zyM3g",
+    duration: "~34h",
+    episodes: 8,
     image: img.posterBhagwat,
     description:
-      "Maharaj Ji's profound exposition of Shrimad Bhagwat Purana — awakening devotion through the lilas of Bhagwan Shri Krishna.",
+      "Maharaj Ji's Shrimad Bhagwat Katha from Rishikesh (2022) — awakening devotion through the lilas of Bhagwan Shri Krishna.",
+  },
+  {
+    id: "mahabharat",
+    title: "Mahabharat",
+    scripture: "Mahabharat",
+    subtitle: "Raghunathgarh · Panch Ved Mahabharat",
+    type: "video",
+    source: "youtube",
+    youtubePlaylistId: "PLzRbcbIdYvQG6aW7AL3YIzkgxakGBwDbA",
+    youtubeVideoId: "3mB-uywvGZQ",
+    duration: "~90h",
+    episodes: 30,
+    image: img.posterMahabharat,
+    description:
+      "Maharaj Ji's Panch Ved Mahabharat discourses from Raghunathgarh (8 June – 7 July 2014) — revealing dharma, devotion, and the eternal wisdom of the epic.",
   },
   {
     id: "ramcharitmanas",
@@ -315,42 +379,6 @@ export const kathas: Katha[] = [
     image: img.posterRamcharitmanas,
     description:
       "The divine story of Shri Ram narrated with simplicity and depth, filling hearts with love and joy.",
-  },
-  {
-    id: "bhaktmaal",
-    title: "Bhaktmaal",
-    scripture: "Bhaktmaal",
-    subtitle: "Lives of Great Devotees",
-    type: "video",
-    duration: "28h",
-    episodes: 32,
-    image: img.posterBhaktmaal,
-    description:
-      "Stories of legendary saints and devotees that inspire a life of pure bhakti and surrender.",
-  },
-  {
-    id: "vinay-patrika",
-    title: "Vinay Patrika",
-    scripture: "Vinay Patrika",
-    subtitle: "Tulsidas · Devotional Hymns",
-    type: "audio",
-    duration: "12h",
-    episodes: 18,
-    image: img.posterVinayPatrika,
-    description:
-      "Heartfelt discourses on Vinay Patrika — prayers of humility that melt the heart toward the Divine.",
-  },
-  {
-    id: "mahabharat",
-    title: "Mahabharat",
-    scripture: "Mahabharat",
-    subtitle: "Dharma · Courage · Devotion",
-    type: "video",
-    duration: "50h",
-    episodes: 56,
-    image: img.posterMahabharat,
-    description:
-      "Maharaj Ji's discourses on the Mahabharat — revealing dharma, devotion, and the eternal wisdom of the epic.",
   },
 ];
 
@@ -419,9 +447,34 @@ export function getKatha(id: string): Katha | undefined {
   return kathas.find((k) => k.id === id);
 }
 
-export function getEpisodes(katha: Katha): Episode[] {
+export function getEpisodes(
+  katha: Katha,
+  lang: "en" | "hi" = "en",
+): Episode[] {
+  const ytPlaylist = kathaYoutubePlaylists[katha.id];
+  if (katha.source === "youtube" && ytPlaylist?.items.length) {
+    return ytPlaylist.items.map((item, i) => {
+      const n = i + 1;
+      return {
+        id: `${katha.id}-e${n}`,
+        number: n,
+        title: youtubeItemTitle(item, lang),
+        description:
+          lang === "hi"
+            ? `${katha.title} — प्रकरण ${n}`
+            : `${katha.title} — Episode ${n}`,
+        duration: formatYoutubeDuration(item.duration),
+        type: katha.type,
+        image: katha.image,
+        publishedAgo: formatPublishedAgo(item.publishedAt, lang),
+        youtubeVideoId: item.id,
+      };
+    });
+  }
+
   const titles = episodeTitles[katha.id] ?? [];
   const count = Math.min(katha.episodes, Math.max(titles.length, 8));
+  const isYoutube = katha.source === "youtube";
 
   return Array.from({ length: count }, (_, i) => {
     const n = i + 1;
@@ -436,6 +489,9 @@ export function getEpisodes(katha: Katha): Episode[] {
       type: katha.type,
       image: katha.image,
       publishedAgo: agoLabels[i % agoLabels.length],
+      ...(isYoutube && katha.youtubeVideoId
+        ? { youtubeVideoId: katha.youtubeVideoId }
+        : {}),
     };
   });
 }

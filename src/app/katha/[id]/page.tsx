@@ -190,7 +190,11 @@ export default function KathaSeriesPage({
 
         <div className="mt-5 divide-y divide-border">
           {episodes.map((ep) => (
-            <article key={ep.id} className="flex gap-3 py-5 first:pt-0">
+            <Link
+              key={ep.id}
+              href={`/katha/${katha.id}/play/${ep.id}`}
+              className="flex gap-3 py-5 first:pt-0 transition-opacity active:opacity-80"
+            >
               <div className="min-w-0 flex-1">
                 <p className="flex items-center gap-1.5 text-[11px] text-muted-foreground">
                   <span>{ep.publishedAgo}</span>
@@ -205,26 +209,20 @@ export default function KathaSeriesPage({
                     </span>
                   )}
                 </p>
-                <h3 className="mt-1 text-[15px] font-bold leading-snug tracking-tight text-ink">
+                <h3 className="mt-1 line-clamp-2 text-[15px] font-bold leading-snug tracking-tight text-ink">
                   {ep.title}
                 </h3>
                 <p className="mt-1 line-clamp-2 text-xs leading-relaxed text-muted-foreground">
                   {ep.description}
                 </p>
                 <div className="mt-2.5">
-                  <Link
-                    href={`/katha/${katha.id}/play/${ep.id}`}
-                    className="inline-flex items-center gap-1.5 rounded-full bg-secondary px-3 py-1.5 text-xs font-semibold text-ink transition-transform active:scale-95"
-                  >
+                  <span className="inline-flex items-center gap-1.5 rounded-full bg-secondary px-3 py-1.5 text-xs font-semibold text-ink">
                     <Play className="size-3 fill-current" />
                     {ep.duration}
-                  </Link>
+                  </span>
                 </div>
               </div>
-              <Link
-                href={`/katha/${katha.id}/play/${ep.id}`}
-                className="relative size-[4.5rem] shrink-0 overflow-hidden rounded-2xl bg-secondary"
-              >
+              <div className="relative size-[4.5rem] shrink-0 overflow-hidden rounded-2xl bg-secondary">
                 <Image
                   src={ep.image}
                   alt={ep.title}
@@ -232,8 +230,8 @@ export default function KathaSeriesPage({
                   className="object-cover"
                   sizes="72px"
                 />
-              </Link>
-            </article>
+              </div>
+            </Link>
           ))}
         </div>
       </section>

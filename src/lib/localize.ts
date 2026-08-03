@@ -10,6 +10,7 @@ import {
   exploreLinks,
   featuredMedia,
   gauSevaPage,
+  getEpisodes,
   getKatha,
   goshalas,
   gurukulInfo,
@@ -29,6 +30,7 @@ import {
   type SevaCause,
 } from "@/lib/data";
 import { hiContent as hi } from "@/lib/hi-content";
+import { kathaYoutubePlaylists } from "@/lib/youtube-playlists";
 
 export function localizedBrand(lang: AppLanguage) {
   if (lang === "en") return brand;
@@ -87,6 +89,11 @@ export function localizedKatha(
 }
 
 export function localizedEpisodes(lang: AppLanguage, katha: Katha): Episode[] {
+  // YouTube playlist episodes — titles follow app language when bilingual.
+  if (katha.source === "youtube" && kathaYoutubePlaylists[katha.id]?.items.length) {
+    return getEpisodes(katha, lang);
+  }
+
   const titlesEn = (
     {
       "bhagwat-vrindavan": [
@@ -181,6 +188,9 @@ export function localizedEpisodes(lang: AppLanguage, katha: Katha): Episode[] {
       type: katha.type,
       image: katha.image,
       publishedAgo: ago[i % ago.length],
+      ...(katha.source === "youtube" && katha.youtubeVideoId
+        ? { youtubeVideoId: katha.youtubeVideoId }
+        : {}),
     };
   });
 }
