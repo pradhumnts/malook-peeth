@@ -142,7 +142,7 @@ export const messages = {
   },
   hi: {
     navHome: "होम",
-    navLibrary: "पुस्तकालय",
+    navLibrary: "लाइब्रेरी",
     navDonate: "दान",
     navAbout: "परिचय",
     seeAll: "सभी देखें",
