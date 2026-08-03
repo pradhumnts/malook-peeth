@@ -49,7 +49,7 @@ export default function EkadashiPage() {
 
       {/* Next Ekadashi */}
       <section className="px-4">
-        <div className="overflow-hidden rounded-3xl bg-ink text-white">
+        <div className="overflow-hidden rounded-3xl bg-inverse text-white">
           <div className="bg-[radial-gradient(ellipse_at_top_right,_rgba(249,115,22,0.35),_transparent_55%)] px-5 pb-6 pt-6">
             <p className="text-[11px] font-semibold uppercase tracking-[0.18em] text-white/55">
               {t("nextEkadashi")}

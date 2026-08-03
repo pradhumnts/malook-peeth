@@ -172,7 +172,7 @@ export function PlayerView({
             <button
               type="button"
               onClick={() => setPlaying((p) => !p)}
-              className="flex size-16 items-center justify-center rounded-full bg-white text-ink shadow-lg transition-transform active:scale-90"
+              className="flex size-16 items-center justify-center rounded-full bg-white text-zinc-900 shadow-lg transition-transform active:scale-90"
               aria-label={playing ? "Pause" : "Play"}
             >
               {playing ? (

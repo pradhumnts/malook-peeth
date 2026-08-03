@@ -23,6 +23,10 @@ export const messages = {
     drawerDikshaSub: "Daily practice for initiated devotees",
     drawerSettings: "Settings",
     drawerSettingsSub: "Language & preferences",
+    drawerDarkMode: "Dark mode",
+    drawerDarkModeSub: "Use a darker look across the app",
+    drawerDarkModeOn: "On",
+    drawerDarkModeOff: "Off",
     drawerFooter: "Malook Peeth · Vrindavan",
 
     // Settings
@@ -46,7 +50,7 @@ export const messages = {
     video: "Video",
     audio: "Audio",
     parts: "parts",
-    episodes: "episodes",
+    episodes: "Episodes",
 
     // Pages
     eventsTitle: "Events",
@@ -152,6 +156,10 @@ export const messages = {
     drawerDikshaSub: "दीक्षित भक्तों की दैनिक साधना",
     drawerSettings: "सेटिंग्स",
     drawerSettingsSub: "भाषा और प्राथमिकताएँ",
+    drawerDarkMode: "डार्क मोड",
+    drawerDarkModeSub: "पूरे ऐप में गहरा स्वरूप उपयोग करें",
+    drawerDarkModeOn: "चालू",
+    drawerDarkModeOff: "बंद",
     drawerFooter: "मलूक पीठ · वृन्दावन",
 
     settingsTitle: "सेटिंग्स",

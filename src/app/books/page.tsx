@@ -29,7 +29,7 @@ export default function BooksPage() {
               <div className="absolute inset-x-0 bottom-0 h-20 bg-gradient-to-t from-black/50 to-transparent" />
               <button
                 type="button"
-                className="absolute bottom-3 right-3 flex size-9 items-center justify-center rounded-full bg-white text-ink shadow-md transition-transform active:scale-90"
+                className="absolute bottom-3 right-3 flex size-9 items-center justify-center rounded-full bg-white text-zinc-900 shadow-md transition-transform active:scale-90"
                 aria-label={`Download ${book.title}`}
               >
                 <Download className="size-4" />

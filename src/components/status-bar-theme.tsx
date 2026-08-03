@@ -2,24 +2,30 @@
 
 import { useEffect } from "react";
 import { usePathname } from "next/navigation";
+import { useTheme } from "@/components/theme-provider";
+
+const LIGHT_THEME_COLOR = "#ffffff";
+const DARK_THEME_COLOR = "#2a241f";
 
 /**
- * Stable status-bar setup for the whole app:
- * - black-translucent so media can sit under the clock
- * - white theme-color (never remove it, never use dark — both create slabs)
- * - don't tint html/body; each screen paints its own edge-to-edge media
+ * Keeps theme-color / status-bar chrome in sync with light & dark mode.
  */
 export function StatusBarTheme() {
   const pathname = usePathname();
+  const { theme, ready } = useTheme();
 
   useEffect(() => {
+    if (!ready) return;
+
+    const color = theme === "dark" ? DARK_THEME_COLOR : LIGHT_THEME_COLOR;
+
     let meta = document.querySelector('meta[name="theme-color"]');
     if (!meta) {
       meta = document.createElement("meta");
       meta.setAttribute("name", "theme-color");
       document.head.appendChild(meta);
     }
-    meta.setAttribute("content", "#ffffff");
+    meta.setAttribute("content", color);
 
     let apple = document.querySelector(
       'meta[name="apple-mobile-web-app-status-bar-style"]',
@@ -34,7 +40,7 @@ export function StatusBarTheme() {
     document.documentElement.style.backgroundColor = "";
     document.body.style.backgroundColor = "";
     delete document.documentElement.dataset.chrome;
-  }, [pathname]);
+  }, [pathname, theme, ready]);
 
   return null;
 }

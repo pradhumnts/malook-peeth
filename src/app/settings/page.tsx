@@ -46,7 +46,7 @@ export default function SettingsPage() {
                 className={cn(
                   "flex w-full items-center gap-3 px-4 py-3.5 text-left transition-colors",
                   i > 0 && "border-t border-border/60",
-                  active ? "bg-white" : "active:bg-white/60",
+                  active ? "bg-background" : "active:bg-background/60",
                 )}
               >
                 <span className="min-w-0 flex-1">

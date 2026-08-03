@@ -120,7 +120,7 @@ export default function EventDetailPage({
         <div className="mt-5 flex flex-wrap gap-2">
           <button
             type="button"
-            className="rounded-full bg-white px-5 py-2.5 text-sm font-semibold text-ink"
+            className="rounded-full bg-white px-5 py-2.5 text-sm font-semibold text-zinc-900"
           >
             I&apos;m interested
           </button>

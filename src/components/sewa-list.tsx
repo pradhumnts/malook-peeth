@@ -50,7 +50,7 @@ export function SewaList({ linkToDonate, featuredOnly }: SewaListProps) {
 
   return (
     <div className="space-y-8">
-      <div className="overflow-hidden rounded-3xl bg-ink text-white">
+      <div className="overflow-hidden rounded-3xl bg-inverse text-white">
         <div className="bg-[radial-gradient(ellipse_at_top_right,_rgba(249,115,22,0.35),_transparent_55%)] px-5 py-6">
           <p className="text-[11px] font-semibold uppercase tracking-[0.18em] text-white/55">
             {t("flexibleOffering")}
@@ -75,7 +75,7 @@ export function SewaList({ linkToDonate, featuredOnly }: SewaListProps) {
           {linkToDonate ? (
             <Link
               href="/donate"
-              className="mt-4 inline-flex rounded-full bg-white px-5 py-2.5 text-sm font-semibold text-ink"
+              className="mt-4 inline-flex rounded-full bg-white px-5 py-2.5 text-sm font-semibold text-zinc-900"
             >
               {t("giveNow")}
             </Link>

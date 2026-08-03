@@ -3,8 +3,17 @@
 import Image from "next/image";
 import Link from "next/link";
 import { useMemo, useState } from "react";
-import { CalendarDays, ChevronRight, Flame, Menu, Settings } from "lucide-react";
+import {
+  CalendarDays,
+  ChevronRight,
+  Flame,
+  Menu,
+  Moon,
+  Settings,
+  Sun,
+} from "lucide-react";
 import { useLanguage } from "@/components/language-provider";
+import { useTheme } from "@/components/theme-provider";
 import {
   Sheet,
   SheetContent,
@@ -13,6 +22,7 @@ import {
   SheetTitle,
 } from "@/components/ui/sheet";
 import { localizedBrand } from "@/lib/localize";
+import { cn } from "@/lib/utils";
 
 function MenuRow({
   href,
@@ -48,6 +58,51 @@ function MenuRow({
       </span>
       <ChevronRight className="size-4 shrink-0 text-muted-foreground/70" />
     </Link>
+  );
+}
+
+function ThemeToggleRow() {
+  const { t } = useLanguage();
+  const { theme, toggleTheme } = useTheme();
+  const dark = theme === "dark";
+
+  return (
+    <button
+      type="button"
+      role="switch"
+      aria-checked={dark}
+      onClick={toggleTheme}
+      className="flex w-full items-center gap-3.5 px-4 py-3.5 text-left transition-colors active:bg-secondary/80"
+    >
+      <span className="flex size-10 shrink-0 items-center justify-center rounded-full bg-secondary text-ink">
+        {dark ? (
+          <Moon className="size-5" strokeWidth={1.75} />
+        ) : (
+          <Sun className="size-5" strokeWidth={1.75} />
+        )}
+      </span>
+      <span className="min-w-0 flex-1">
+        <span className="block text-[15px] font-semibold tracking-tight text-ink">
+          {t("drawerDarkMode")}
+        </span>
+        <span className="mt-0.5 block text-xs text-muted-foreground">
+          {t("drawerDarkModeSub")}
+        </span>
+      </span>
+      <span
+        className={cn(
+          "relative h-7 w-12 shrink-0 rounded-full transition-colors",
+          dark ? "bg-primary" : "bg-border",
+        )}
+      >
+        <span
+          className={cn(
+            "absolute top-0.5 left-0.5 size-6 rounded-full bg-white shadow-sm transition-transform",
+            dark && "translate-x-5",
+          )}
+        />
+      </span>
+    </button>
   );
 }
 
@@ -109,6 +164,7 @@ export function AppDrawer() {
               subtitle={t("drawerDikshaSub")}
               onNavigate={() => setOpen(false)}
             />
+            <ThemeToggleRow />
             <MenuRow
               href="/settings"
               icon={<Settings className="size-5" strokeWidth={1.75} />}

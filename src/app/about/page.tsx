@@ -205,7 +205,7 @@ export default function AboutPage() {
         <div className="mt-5 flex flex-wrap gap-2">
           <Link
             href="/katha"
-            className="rounded-full bg-white px-5 py-2.5 text-sm font-semibold text-ink"
+            className="rounded-full bg-white px-5 py-2.5 text-sm font-semibold text-zinc-900"
           >
             {t("kathaTitle")}
           </Link>

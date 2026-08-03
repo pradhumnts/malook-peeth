@@ -48,7 +48,7 @@ export default function GauSevaPage() {
               </p>
               <Link
                 href="/donate"
-                className="mt-4 inline-flex rounded-full bg-white px-5 py-2.5 text-sm font-semibold text-ink"
+                className="mt-4 inline-flex rounded-full bg-white px-5 py-2.5 text-sm font-semibold text-zinc-900"
               >
                 {t("donateForGauMata")}
               </Link>

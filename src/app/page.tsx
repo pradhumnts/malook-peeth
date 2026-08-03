@@ -165,7 +165,7 @@ export default function HomePage() {
                 {t("gauSewaHomeMeta")}
               </p>
             </div>
-            <span className="mb-0.5 flex size-9 shrink-0 items-center justify-center rounded-full bg-white text-ink transition-transform group-hover:translate-x-0.5 group-active:scale-95">
+            <span className="mb-0.5 flex size-9 shrink-0 items-center justify-center rounded-full bg-white text-zinc-900 transition-transform group-hover:translate-x-0.5 group-active:scale-95">
               <ChevronRight className="size-4" strokeWidth={2.25} />
             </span>
           </div>
