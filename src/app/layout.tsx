@@ -53,8 +53,7 @@ export const metadata: Metadata = {
 };
 
 export const viewport: Viewport = {
-  // Per-route theme-color is managed by StatusBarTheme.
-  // A static color here becomes an opaque status-bar slab on immersive screens.
+  themeColor: "#ffffff",
   colorScheme: "light",
   width: "device-width",
   initialScale: 1,

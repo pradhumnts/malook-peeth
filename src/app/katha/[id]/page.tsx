@@ -46,14 +46,13 @@ export default function KathaSeriesPage({
     needsToggle && !expanded ? `${desc.slice(0, 85).trim()}…` : desc;
 
   return (
-    <div className="min-h-dvh bg-transparent">
+    <div className="min-h-dvh bg-background">
       {/*
-        No -mt: shell already starts at the viewport top under black-translucent.
-        Padding reserves the status-bar band for the wash; sharp poster +
-        controls begin just below so art isn't cropped and buttons stay tappable.
+        Poster color-wash fills the status-bar band; sharp art + controls
+        start just below so nothing is cropped and buttons stay tappable.
       */}
       <section className="relative overflow-hidden">
-        {/* Poster color-wash — paints through the status-bar band */}
+        {/* Poster color-wash */}
         <div className="pointer-events-none absolute inset-0 z-0" aria-hidden>
           <Image
             src={katha.image}
@@ -67,7 +66,7 @@ export default function KathaSeriesPage({
             className="absolute inset-x-0 top-0 h-28"
             style={{
               background:
-                "linear-gradient(to bottom, rgba(0,0,0,0.22) 0%, transparent 100%)",
+                "linear-gradient(to bottom, rgba(0,0,0,0.18) 0%, transparent 100%)",
             }}
           />
           <div

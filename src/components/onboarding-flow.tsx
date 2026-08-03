@@ -31,7 +31,7 @@ export function OnboardingFlow() {
   }
 
   return (
-    <div className="fixed inset-0 z-50 overflow-hidden bg-black">
+    <div className="fixed inset-0 z-50 overflow-hidden bg-background">
       {/* Full-bleed photo — paints under status bar / Dynamic Island */}
       <div className="absolute inset-0">
         <AnimatePresence mode="wait">
