@@ -110,31 +110,16 @@ export function PlayerView({
           <motion.div
             animate={{ scale: playing ? 1 : 0.96 }}
             transition={{ type: "spring", stiffness: 200, damping: 20 }}
-            className="relative aspect-square w-full max-w-[19.5rem]"
+            className="relative aspect-square w-full max-w-[19.5rem] overflow-hidden rounded-[1.75rem] shadow-[0_28px_80px_rgba(0,0,0,0.55)] ring-1 ring-white/10"
           >
-            {/* Soft blurred poster halo behind the sharp art (Apple Music) */}
-            <div
-              className="pointer-events-none absolute -inset-[18%] -z-10 overflow-hidden rounded-[3rem] opacity-70"
-              aria-hidden
-            >
-              <Image
-                src={episode.image}
-                alt=""
-                fill
-                className="scale-110 object-cover blur-3xl brightness-110 saturate-150"
-                sizes="400px"
-              />
-            </div>
-            <div className="relative aspect-square w-full overflow-hidden rounded-[1.75rem] shadow-[0_28px_80px_rgba(0,0,0,0.55)] ring-1 ring-white/10">
-              <Image
-                src={episode.image}
-                alt={episode.title}
-                fill
-                className="object-cover"
-                sizes="400px"
-                priority
-              />
-            </div>
+            <Image
+              src={episode.image}
+              alt={episode.title}
+              fill
+              className="object-cover"
+              sizes="400px"
+              priority
+            />
           </motion.div>
         </div>
 
