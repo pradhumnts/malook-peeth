@@ -4,8 +4,9 @@ import Image from "next/image";
 import Link from "next/link";
 import { useMemo } from "react";
 import { motion } from "framer-motion";
-import { Bell, ChevronRight, Search } from "lucide-react";
+import { Bell, ChevronRight } from "lucide-react";
 import { AppDrawer } from "@/components/app-drawer";
+import { ConnectCard } from "@/components/connect-card";
 import { EventCard } from "@/components/event-card";
 import { ExploreTile } from "@/components/explore-tile";
 import { FeaturedCarousel } from "@/components/featured-carousel";
@@ -54,13 +55,6 @@ export default function HomePage() {
           >
             {t("contribute")}
           </Link>
-          <button
-            type="button"
-            className="flex size-9 items-center justify-center rounded-full bg-secondary text-ink"
-            aria-label={t("search")}
-          >
-            <Search className="size-4" strokeWidth={1.75} />
-          </button>
           <button
             type="button"
             className="flex size-9 items-center justify-center rounded-full bg-secondary text-ink"
@@ -177,7 +171,7 @@ export default function HomePage() {
         variants={fade}
         initial="hidden"
         animate="show"
-        className="mt-8 pb-4"
+        className="mt-8"
       >
         <SectionHeader title={t("explore")} />
         <HScroll>
@@ -185,6 +179,21 @@ export default function HomePage() {
             <ExploreTile key={link.href} {...link} />
           ))}
         </HScroll>
+      </motion.section>
+
+      <motion.section
+        custom={5}
+        variants={fade}
+        initial="hidden"
+        animate="show"
+        className="mt-8 px-4 pb-4"
+      >
+        <SectionHeader
+          title={t("connect")}
+          subtitle={t("connectSub")}
+          className="px-0"
+        />
+        <ConnectCard />
       </motion.section>
     </div>
   );

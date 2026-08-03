@@ -39,7 +39,7 @@ export default function EventDetailPage({
       {/* Hero */}
       <div className="px-4">
         <div className="relative overflow-hidden rounded-[1.75rem]">
-          <div className="relative aspect-[16/10]">
+          <div className="relative aspect-square">
             <Image
               src={event.image}
               alt={event.title}
