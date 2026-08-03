@@ -76,6 +76,33 @@ export default function KathaSeriesPage({
           className="relative z-10"
           style={{ paddingTop: "env(safe-area-inset-top, 0px)" }}
         >
+          {/* Controls sit outside the poster mask so they stay fully opaque */}
+          <div className="absolute inset-x-0 top-0 z-30 flex items-center justify-between px-4 pt-[max(0.65rem,calc(env(safe-area-inset-top,0px)+0.35rem))]">
+            <Link
+              href="/katha"
+              className="flex size-10 items-center justify-center rounded-full bg-black/35 text-white shadow-sm backdrop-blur-xl"
+              aria-label={t("back")}
+            >
+              <ChevronLeft className="size-5" />
+            </Link>
+            <div className="flex items-center gap-0.5 rounded-full bg-black/35 px-1.5 py-1 shadow-sm backdrop-blur-xl">
+              <button
+                type="button"
+                className="flex size-8 items-center justify-center text-white"
+                aria-label="Save"
+              >
+                <Plus className="size-4" />
+              </button>
+              <button
+                type="button"
+                className="flex size-8 items-center justify-center text-white"
+                aria-label={t("more")}
+              >
+                <MoreHorizontal className="size-4" />
+              </button>
+            </div>
+          </div>
+
           <div
             className="relative aspect-[4/5] max-h-[68vh] w-full overflow-hidden sm:aspect-[16/11] sm:max-h-none"
             style={{
@@ -102,33 +129,6 @@ export default function KathaSeriesPage({
               }}
               aria-hidden
             />
-
-            {/* Controls over the poster, just below the status bar */}
-            <div className="absolute inset-x-0 top-0 z-20 flex items-center justify-between px-4 pt-2.5">
-              <Link
-                href="/katha"
-                className="flex size-10 items-center justify-center rounded-full bg-black/30 text-white backdrop-blur-xl"
-                aria-label={t("back")}
-              >
-                <ChevronLeft className="size-5" />
-              </Link>
-              <div className="flex items-center gap-0.5 rounded-full bg-black/30 px-1.5 py-1 backdrop-blur-xl">
-                <button
-                  type="button"
-                  className="flex size-8 items-center justify-center text-white"
-                  aria-label="Save"
-                >
-                  <Plus className="size-4" />
-                </button>
-                <button
-                  type="button"
-                  className="flex size-8 items-center justify-center text-white"
-                  aria-label={t("more")}
-                >
-                  <MoreHorizontal className="size-4" />
-                </button>
-              </div>
-            </div>
 
             <div className="absolute inset-x-0 bottom-0 z-10 flex flex-col items-center px-6 pb-8 text-center">
               <motion.div
