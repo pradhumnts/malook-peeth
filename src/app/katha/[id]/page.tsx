@@ -52,33 +52,26 @@ export default function KathaSeriesPage({
         start just below so nothing is cropped and buttons stay tappable.
       */}
       <section className="relative overflow-hidden">
-        {/* Poster color-wash */}
+        {/* Poster color-wash — soft match to artwork, no hard vignette */}
         <div className="pointer-events-none absolute inset-0 z-0" aria-hidden>
           <Image
             src={katha.image}
             alt=""
             fill
             priority
-            className="scale-[1.5] object-cover object-top blur-[60px] brightness-[0.9] saturate-150"
+            className="scale-[1.55] object-cover object-top blur-[64px] brightness-95 saturate-[1.2]"
             sizes="100vw"
-          />
-          <div
-            className="absolute inset-x-0 top-0 h-28"
-            style={{
-              background:
-                "linear-gradient(to bottom, rgba(0,0,0,0.18) 0%, transparent 100%)",
-            }}
           />
           <div
             className="absolute inset-x-0 bottom-0 h-36"
             style={{
               background:
-                "linear-gradient(to bottom, transparent 0%, rgba(255,255,255,0.5) 60%, #ffffff 100%)",
+                "linear-gradient(to bottom, transparent 0%, rgba(255,255,255,0.45) 55%, #ffffff 100%)",
             }}
           />
         </div>
 
-        {/* Sharp poster starts below the status bar */}
+        {/* Sharp poster — long soft fade into the wash above */}
         <div
           className="relative z-10"
           style={{ paddingTop: "env(safe-area-inset-top, 0px)" }}
@@ -87,9 +80,9 @@ export default function KathaSeriesPage({
             className="relative aspect-[4/5] max-h-[68vh] w-full overflow-hidden sm:aspect-[16/11] sm:max-h-none"
             style={{
               maskImage:
-                "linear-gradient(to bottom, transparent 0%, black 3%, black 100%)",
+                "linear-gradient(to bottom, transparent 0%, rgba(0,0,0,0.35) 8%, rgba(0,0,0,0.75) 16%, black 28%, black 100%)",
               WebkitMaskImage:
-                "linear-gradient(to bottom, transparent 0%, black 3%, black 100%)",
+                "linear-gradient(to bottom, transparent 0%, rgba(0,0,0,0.35) 8%, rgba(0,0,0,0.75) 16%, black 28%, black 100%)",
             }}
           >
             <Image
