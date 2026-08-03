@@ -50,7 +50,13 @@ export function AppShell({ children }: { children: React.ReactNode }) {
     <LanguageProvider>
       <ServiceWorkerRegister />
       <StatusBarTheme />
-      <div className="relative mx-auto flex min-h-dvh w-full max-w-lg flex-col bg-background md:max-w-2xl lg:max-w-5xl lg:shadow-[0_0_0_1px_rgba(0,0,0,0.04)]">
+      <div
+        className={
+          hideChrome
+            ? "relative mx-auto flex min-h-dvh w-full max-w-lg flex-col bg-transparent md:max-w-2xl lg:max-w-5xl"
+            : "relative mx-auto flex min-h-dvh w-full max-w-lg flex-col bg-background md:max-w-2xl lg:max-w-5xl lg:shadow-[0_0_0_1px_rgba(0,0,0,0.04)]"
+        }
+      >
         <main
           className={
             hideChrome

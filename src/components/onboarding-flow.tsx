@@ -31,8 +31,8 @@ export function OnboardingFlow() {
   }
 
   return (
-    <div className="fixed inset-0 z-50 overflow-hidden bg-background">
-      {/* Full-bleed photo — edge to edge under status bar */}
+    <div className="fixed inset-0 z-50 overflow-hidden bg-black">
+      {/* Full-bleed photo — paints under status bar / Dynamic Island */}
       <div className="absolute inset-0">
         <AnimatePresence mode="wait">
           <motion.div
@@ -55,12 +55,12 @@ export function OnboardingFlow() {
         </AnimatePresence>
       </div>
 
-      {/* Soft top fade only — no solid bar */}
+      {/* Soft top scrim for status-bar glyphs — no solid bar */}
       <div
-        className="pointer-events-none absolute inset-x-0 top-0 z-[1] h-32"
+        className="pointer-events-none absolute inset-x-0 top-0 z-[1] h-40"
         style={{
           background:
-            "linear-gradient(to bottom, rgba(0,0,0,0.28) 0%, rgba(0,0,0,0.08) 55%, rgba(0,0,0,0) 100%)",
+            "linear-gradient(to bottom, rgba(0,0,0,0.45) 0%, rgba(0,0,0,0.18) 45%, rgba(0,0,0,0) 100%)",
         }}
         aria-hidden
       />

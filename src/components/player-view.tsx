@@ -52,17 +52,28 @@ export function PlayerView({
   const [volume, setVolume] = useState([70]);
 
   return (
-    <div className="fixed inset-0 z-[60] overflow-hidden">
-      <Image
-        src={episode.image}
-        alt=""
-        fill
-        priority
-        className="scale-110 object-cover blur-2xl brightness-75"
-        sizes="100vw"
-      />
-      <div className="absolute inset-0 bg-black/35" />
-      <div className="pointer-events-none absolute inset-x-0 top-0 h-36 bg-gradient-to-b from-black/30 via-black/10 to-transparent" />
+    <div className="fixed inset-0 z-[60] overflow-hidden bg-[#1a1512]">
+      {/* Expanded color wash — fills under status bar like Apple Music */}
+      <div className="absolute inset-0">
+        <Image
+          src={episode.image}
+          alt=""
+          fill
+          priority
+          className="scale-[1.65] object-cover blur-[72px] brightness-[0.85] saturate-125"
+          sizes="100vw"
+        />
+        <div className="absolute inset-0 bg-gradient-to-b from-black/25 via-black/45 to-black/70" />
+        {/* Extra soft bloom so the wash feels alive, not flat */}
+        <div
+          className="pointer-events-none absolute inset-0 opacity-40"
+          style={{
+            background:
+              "radial-gradient(ellipse 80% 55% at 50% 28%, rgba(255,255,255,0.18), transparent 70%)",
+          }}
+          aria-hidden
+        />
+      </div>
 
       <motion.div
         initial={{ opacity: 0, y: 24 }}
@@ -73,13 +84,13 @@ export function PlayerView({
         <div className="flex items-center justify-between">
           <Link
             href={`/katha/${katha.id}`}
-            className="flex size-10 items-center justify-center rounded-full bg-white/15 text-white backdrop-blur-md"
+            className="flex size-10 items-center justify-center rounded-full bg-white/12 text-white backdrop-blur-xl"
             aria-label="Close player"
           >
             <ChevronDown className="size-5" />
           </Link>
           <div className="text-center">
-            <p className="text-[10px] font-semibold uppercase tracking-[0.2em] text-white/60">
+            <p className="text-[10px] font-semibold uppercase tracking-[0.2em] text-white/55">
               Now Playing
             </p>
             <p className="font-serif text-sm italic text-white/85">
@@ -88,27 +99,42 @@ export function PlayerView({
           </div>
           <button
             type="button"
-            className="flex size-10 items-center justify-center rounded-full bg-white/15 text-white backdrop-blur-md"
+            className="flex size-10 items-center justify-center rounded-full bg-white/12 text-white backdrop-blur-xl"
             aria-label="Share"
           >
             <Share2 className="size-4" />
           </button>
         </div>
 
-        <div className="flex flex-1 items-center justify-center py-6">
+        <div className="flex flex-1 items-center justify-center py-5">
           <motion.div
             animate={{ scale: playing ? 1 : 0.96 }}
             transition={{ type: "spring", stiffness: 200, damping: 20 }}
-            className="relative aspect-square w-full max-w-sm overflow-hidden rounded-[2rem] shadow-[0_30px_80px_rgba(0,0,0,0.45)]"
+            className="relative aspect-square w-full max-w-[19.5rem]"
           >
-            <Image
-              src={episode.image}
-              alt={episode.title}
-              fill
-              className="object-cover"
-              sizes="400px"
-              priority
-            />
+            {/* Soft blurred poster halo behind the sharp art (Apple Music) */}
+            <div
+              className="pointer-events-none absolute -inset-[18%] -z-10 overflow-hidden rounded-[3rem] opacity-70"
+              aria-hidden
+            >
+              <Image
+                src={episode.image}
+                alt=""
+                fill
+                className="scale-110 object-cover blur-3xl brightness-110 saturate-150"
+                sizes="400px"
+              />
+            </div>
+            <div className="relative aspect-square w-full overflow-hidden rounded-[1.75rem] shadow-[0_28px_80px_rgba(0,0,0,0.55)] ring-1 ring-white/10">
+              <Image
+                src={episode.image}
+                alt={episode.title}
+                fill
+                className="object-cover"
+                sizes="400px"
+                priority
+              />
+            </div>
           </motion.div>
         </div>
 
@@ -118,13 +144,13 @@ export function PlayerView({
               <h1 className="truncate text-2xl font-bold tracking-tight text-white">
                 {episode.title}
               </h1>
-              <p className="mt-1 truncate text-base text-white/65">
+              <p className="mt-1 truncate text-base text-white/60">
                 {brand.shortMaharaj} · {katha.title}
               </p>
             </div>
             <button
               type="button"
-              className="mt-1 flex size-9 shrink-0 items-center justify-center rounded-full bg-white/15 text-white"
+              className="mt-1 flex size-9 shrink-0 items-center justify-center rounded-full bg-white/12 text-white backdrop-blur-md"
               aria-label={t("more")}
             >
               <MoreHorizontal className="size-4" />
@@ -139,11 +165,11 @@ export function PlayerView({
               }
               max={100}
               step={1}
-              className="[&_[data-slot=slider-track]]:h-1 [&_[data-slot=slider-track]]:bg-white/25 [&_[data-slot=slider-range]]:bg-white [&_[data-slot=slider-thumb]]:size-3.5 [&_[data-slot=slider-thumb]]:border-0 [&_[data-slot=slider-thumb]]:bg-white"
+              className="[&_[data-slot=slider-track]]:h-1 [&_[data-slot=slider-track]]:bg-white/20 [&_[data-slot=slider-range]]:bg-white [&_[data-slot=slider-thumb]]:size-3.5 [&_[data-slot=slider-thumb]]:border-0 [&_[data-slot=slider-thumb]]:bg-white"
             />
-            <div className="mt-2 flex items-center justify-between text-[11px] tabular-nums text-white/55">
+            <div className="mt-2 flex items-center justify-between text-[11px] tabular-nums text-white/50">
               <span>12:48</span>
-              <span className="rounded-md bg-white/10 px-2 py-0.5 text-[10px] font-medium uppercase tracking-wide text-white/80">
+              <span className="rounded-md bg-white/10 px-2 py-0.5 text-[10px] font-medium uppercase tracking-wide text-white/75">
                 {episode.type === "video" ? t("video") : t("audio")}
               </span>
               <span>-{episode.duration}</span>
@@ -180,7 +206,7 @@ export function PlayerView({
           </div>
 
           <div className="flex items-center gap-3 px-1">
-            <Volume1 className="size-4 text-white/50" />
+            <Volume1 className="size-4 text-white/45" />
             <Slider
               value={volume}
               onValueChange={(v) =>
@@ -188,22 +214,22 @@ export function PlayerView({
               }
               max={100}
               step={1}
-              className="[&_[data-slot=slider-track]]:h-1.5 [&_[data-slot=slider-track]]:bg-white/25 [&_[data-slot=slider-range]]:bg-white/80 [&_[data-slot=slider-thumb]]:size-3 [&_[data-slot=slider-thumb]]:border-0 [&_[data-slot=slider-thumb]]:bg-white"
+              className="[&_[data-slot=slider-track]]:h-1.5 [&_[data-slot=slider-track]]:bg-white/20 [&_[data-slot=slider-range]]:bg-white/80 [&_[data-slot=slider-thumb]]:size-3 [&_[data-slot=slider-thumb]]:border-0 [&_[data-slot=slider-thumb]]:bg-white"
             />
-            <Volume2 className="size-4 text-white/50" />
+            <Volume2 className="size-4 text-white/45" />
           </div>
 
           <div className="flex items-center justify-center gap-16 pb-2 pt-1">
             <Link
               href={`/katha/${katha.id}`}
-              className="text-xs font-medium text-white/70 transition-colors hover:text-white"
+              className="text-xs font-medium text-white/65 transition-colors hover:text-white"
             >
               {t("episodes")}
             </Link>
-            <button type="button" className="text-white/70" aria-label="Queue">
+            <button type="button" className="text-white/65" aria-label="Queue">
               <ListMusic className="size-5" />
             </button>
-            <span className="text-xs font-medium text-white/70">
+            <span className="text-xs font-medium text-white/65">
               {episode.number}/{episodes.length}
             </span>
           </div>

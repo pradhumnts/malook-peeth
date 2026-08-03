@@ -113,6 +113,11 @@
     min-height: 100dvh;
     min-height: -webkit-fill-available;
   }
+  /* Immersive routes tint via StatusBarTheme; keep shell from flashing white */
+  html[data-chrome="immersive"] body,
+  html[data-chrome="immersive-dark"] body {
+    background-color: inherit;
+  }
 }
 
 @layer utilities {

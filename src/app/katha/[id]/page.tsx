@@ -47,9 +47,9 @@ export default function KathaSeriesPage({
 
   return (
     <div className="min-h-dvh bg-background">
-      {/* Hero — pull under status bar so the poster isn't cropped by a slab */}
+      {/* Hero — edge-to-edge under status bar, soft blur fade into list */}
       <section className="relative -mt-[env(safe-area-inset-top,0px)]">
-        <div className="relative aspect-[4/5] max-h-[calc(70vh+env(safe-area-inset-top,0px))] w-full overflow-hidden sm:aspect-[16/11] sm:max-h-none">
+        <div className="relative aspect-[4/5] max-h-[calc(68vh+env(safe-area-inset-top,0px))] w-full overflow-hidden sm:aspect-[16/11] sm:max-h-none">
           <Image
             src={katha.image}
             alt={katha.title}
@@ -58,19 +58,37 @@ export default function KathaSeriesPage({
             className="object-cover"
             sizes="100vw"
           />
-          <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/40 via-35% to-transparent" />
-          <div className="pointer-events-none absolute inset-x-0 top-0 h-36 bg-gradient-to-b from-black/35 via-black/10 to-transparent" />
 
-          {/* Top controls */}
-          <div className="absolute inset-x-0 top-0 flex items-center justify-between px-4 pt-[max(0.75rem,env(safe-area-inset-top))]">
+          {/* Top scrim — keeps clock / Dynamic Island readable */}
+          <div
+            className="pointer-events-none absolute inset-x-0 top-0 h-44"
+            style={{
+              background:
+                "linear-gradient(to bottom, rgba(0,0,0,0.5) 0%, rgba(0,0,0,0.2) 40%, transparent 100%)",
+            }}
+            aria-hidden
+          />
+
+          {/* Bottom fade into blurred extension */}
+          <div
+            className="pointer-events-none absolute inset-x-0 bottom-0 h-[55%]"
+            style={{
+              background:
+                "linear-gradient(to top, rgba(0,0,0,0.72) 0%, rgba(0,0,0,0.35) 45%, transparent 100%)",
+            }}
+            aria-hidden
+          />
+
+          {/* Top controls — clear of status bar */}
+          <div className="absolute inset-x-0 top-0 flex items-center justify-between px-4 pt-[max(0.85rem,calc(env(safe-area-inset-top)+0.35rem))]">
             <Link
               href="/katha"
-              className="flex size-10 items-center justify-center rounded-full bg-black/30 text-white backdrop-blur-md"
+              className="flex size-10 items-center justify-center rounded-full bg-black/25 text-white backdrop-blur-xl"
               aria-label={t("back")}
             >
               <ChevronLeft className="size-5" />
             </Link>
-            <div className="flex items-center gap-1 rounded-full bg-black/30 px-2 py-1.5 backdrop-blur-md">
+            <div className="flex items-center gap-0.5 rounded-full bg-black/25 px-1.5 py-1 backdrop-blur-xl">
               <button
                 type="button"
                 className="flex size-8 items-center justify-center text-white"
@@ -89,7 +107,7 @@ export default function KathaSeriesPage({
           </div>
 
           {/* Overlay content */}
-          <div className="absolute inset-x-0 bottom-0 flex flex-col items-center px-6 pb-8 text-center">
+          <div className="absolute inset-x-0 bottom-0 flex flex-col items-center px-6 pb-10 text-center">
             <motion.div
               initial={{ opacity: 0, y: 12 }}
               animate={{ opacity: 1, y: 0 }}
@@ -136,10 +154,30 @@ export default function KathaSeriesPage({
             </motion.div>
           </div>
         </div>
+
+        {/* Blurred poster bridge — Apple Podcasts style into white list */}
+        <div className="relative -mt-16 h-28 overflow-hidden sm:-mt-20 sm:h-32">
+          <Image
+            src={katha.image}
+            alt=""
+            fill
+            className="scale-125 object-cover object-bottom blur-2xl brightness-90 saturate-110"
+            sizes="100vw"
+            aria-hidden
+          />
+          <div
+            className="absolute inset-0"
+            style={{
+              background:
+                "linear-gradient(to bottom, rgba(255,255,255,0) 0%, rgba(255,255,255,0.55) 45%, #ffffff 100%)",
+            }}
+            aria-hidden
+          />
+        </div>
       </section>
 
       {/* Episodes */}
-      <section className="px-4 pb-8 pt-6">
+      <section className="relative z-[1] -mt-6 bg-background px-4 pb-8 pt-2">
         <h2 className="text-2xl font-bold tracking-tight text-ink">
           {t("episodes")}
         </h2>
